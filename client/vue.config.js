@@ -3,6 +3,9 @@ module.exports = {
             proxy: {
                 '/getTodo':{
                     target:'http://localhost:5000/',
+                },
+                '/markTodoComplete':{
+                    target:'http://localhost:5000/'
                 }
             }
     }

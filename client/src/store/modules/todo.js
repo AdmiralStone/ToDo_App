@@ -14,7 +14,6 @@ export const mutations ={
 
 export const actions = {
     getTodoList({commit}){
-        console.log("Reached Here")
         return EventService.getToDoList().then(res => {
             let todos = res.data
             commit('SET_TODO' , todos)
@@ -22,5 +21,14 @@ export const actions = {
         .catch(error => {
             throw error
         })
-    }
+    },
+    markTodoComplete({commit},todoObj){
+        return EventService.markToDoComplete(todoObj).then(res =>{
+            let todos = res.data
+            commit('SET_TODO',todos)
+        })
+        .catch(error =>{
+            throw error
+        })
+     }
 }

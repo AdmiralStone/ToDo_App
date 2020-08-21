@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import model
 
@@ -21,6 +21,14 @@ def ping_pong():
 
 @app.route('/getTodo',methods=['GET'])
 def getTodo():
+    return jsonify(todoList)
+
+@app.route('/markTodoComplete', methods=['POST'])
+def markTodoComplete():
+    postPara_data = request.get_json()
+    for task in todoList:
+        if task['No'] == postPara_data.get('No'):
+            task['Status'] = 1
     return jsonify(todoList)
 
 if __name__ == '__main__':
