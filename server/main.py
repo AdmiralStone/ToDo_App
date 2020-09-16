@@ -25,7 +25,8 @@ def ping_pong():
 
 @app.route('/getTodo',methods=['GET'])
 def getTodo():
-    return jsonify(todoList)
+    result = service.getTodoListFromDB()
+    return jsonify({"data":result})
 
 @app.route('/markTodoComplete', methods=['POST'])
 def markTodoComplete():
