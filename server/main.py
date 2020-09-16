@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import model
+import service 
+
 
 #configuration
 DEBUG = True
@@ -8,6 +10,8 @@ DEBUG = True
 #instantiate the app
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+
 
 #enable CORS
 CORS(app,resources={r'/*':{'origins':'*'}})
@@ -30,6 +34,13 @@ def markTodoComplete():
         if task['No'] == postPara_data.get('No'):
             task['Status'] = 1
     return jsonify(todoList)
+
+@app.route('/addTask', methods=['POST'])
+def createTask():
+    postParam = request.get_json()
+    message = service.createTask(postParam)
+    return jsonify({"message":message})
+    
 
 if __name__ == '__main__':
     app.run()
