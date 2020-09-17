@@ -16,7 +16,8 @@ export default{
     },
 
     markToDoComplete(todoObj){
-        return axios.post("http://localhost:8080/markTodoComplete", todoObj,
+        let postParam = {"todoObj":todoObj}
+        return axios.post("http://localhost:8080/markTodoComplete", postParam,
         {
             headers: {
               // 'application/json' is the modern content-type for JSON, but some
@@ -25,7 +26,14 @@ export default{
               'content-type': 'application/json'
             }
           });
-          
-    // res.data.headers['Content-Type']; // text/json)
-    }
+    },
+    createTodo(todoObj){
+      let postParam = todoObj
+      return axios.post("http://localhost:8080/addTask", postParam,
+      {
+          headers: {
+            'content-type': 'application/json'
+          }
+        });
+  },
 }

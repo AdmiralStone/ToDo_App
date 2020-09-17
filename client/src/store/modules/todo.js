@@ -30,5 +30,14 @@ export const actions = {
         .catch(error =>{
             throw error
         })
-     }
+     },
+     createTodo({commit},todoObj){
+        return EventService.createTodo(todoObj).then(res => {
+            let todos = res.data
+            commit('SET_TODO' , todos)
+        })
+        .catch(error => {
+            throw error
+        })
+    },
 }

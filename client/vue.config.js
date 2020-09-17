@@ -6,6 +6,9 @@ module.exports = {
                 },
                 '/markTodoComplete':{
                     target:'http://localhost:5000/'
+                },
+                '/addTask':{
+                    target:'http://localhost:5000/'
                 }
             }
     }

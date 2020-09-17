@@ -25,23 +25,38 @@ def ping_pong():
 
 @app.route('/getTodo',methods=['GET'])
 def getTodo():
-    result = service.getTodoListFromDB()
-    return jsonify({"data":result})
+    resultObj = {}
+    resultObj["data"] = service.getTodoListFromDB()
+    resultObj["status"] = "success"
+    return jsonify(resultObj)
 
 @app.route('/markTodoComplete', methods=['POST'])
 def markTodoComplete():
-    postPara_data = request.get_json()
-    for task in todoList:
-        if task['No'] == postPara_data.get('No'):
-            task['Status'] = 1
-    return jsonify(todoList)
+    try:
+        resultObj = {}
+        postParams = request.get_json()
+        resultObj["data"] = service.markToDoComplete(postParams)
+        resultObj["status"] = "success"
+        resultObj["message"]= "Task Marked As Complete"
+        return jsonify(resultObj)
+    except Exception as e:
+        resultObj["status"] = "error"
+        resultObj["message"] = str(e)
+        return jsonify({resultObj})
 
 @app.route('/addTask', methods=['POST'])
 def createTask():
-    postParam = request.get_json()
-    message = service.createTask(postParam)
-    return jsonify({"message":message})
+    try:
+        resultObj = {}
+        postParams = request.get_json()
+        resultObj["data"] = service.createTask(postParams)
+        resultObj["status"] = "success"
+        resultObj["message"]= "Task Marked As Complete"
+        return jsonify(resultObj)
+    except Exception as e:
+        resultObj["status"] = "error"
+        resultObj["message"] = str(e)
+        return jsonify({resultObj})
     
-
 if __name__ == '__main__':
     app.run()
