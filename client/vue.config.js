@@ -9,6 +9,9 @@ module.exports = {
                 },
                 '/addTask':{
                     target:'http://localhost:5000/'
+                },
+                '/deleteTodo':{
+                    target:'http://localhost:5000/'
                 }
             }
     }

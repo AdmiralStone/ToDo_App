@@ -40,4 +40,13 @@ export const actions = {
             throw error
         })
     },
+    deleteTodo({commit},todoObj){
+        return EventService.deleteTodo(todoObj).then(res=>{
+            let todos = res.data
+            commit('SET_TODO', todos)
+        })
+        .catch(error => {
+            throw error
+        })
+    }
 }

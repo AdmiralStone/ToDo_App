@@ -57,6 +57,20 @@ def createTask():
         resultObj["status"] = "error"
         resultObj["message"] = str(e)
         return jsonify({resultObj})
+
+@app.route('/deleteTodo', methods=["POST"])
+def deleteTodo():
+    try:
+        resultObj ={}
+        postParams = request.get_json()
+        resultObj["data"] = service.deleteTodo(postParams)
+        resultObj["status"] = "success"
+        resultObj["message"]= "Task Marked As Complete"
+        return jsonify(resultObj)
+    except Exception as e:
+        resultObj["status"] = "error"
+        resultObj["message"] = str(e)
+        return jsonify({resultObj})
     
 if __name__ == '__main__':
     app.run()

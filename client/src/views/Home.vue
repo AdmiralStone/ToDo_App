@@ -17,15 +17,15 @@
             </tr>
           </thead>
           <tbody>
-           <tr v-for="task in msg.data" :key="task.taskId">
-              <td >{{task.taskId}}</td>
+           <tr v-for="task in taskArr.data" :key="task.SNo">
+              <td >{{task.SNo}}</td>
               <td >{{task.Task}}</td>
               <td><span v-if="task.Status == 1">Completed</span>
                 <span v-else>Pending</span></td>
               <td>
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-success btn-sm" v-if="task.Status == 0" v-on:click="markCompleted(task)">Completed</button>
-                  <button type="button" class="btn btn-danger btn-sm">Delete</button> 
+                  <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteTask(task)">Delete</button> 
                 </div>
               </td>
             </tr>
@@ -63,14 +63,14 @@ import store from "@/store";
 export default {
   data(){
     return{
-      msg:null,
+      taskArr:[],
       todoObj:{"Task":null,"Status":0}
     };
   },
   methods:{
     getTods(){
       store.dispatch("todo/getTodoList").then(() => {
-        this.msg = this.$store.state.todo.todoList
+        this.taskArr = this.$store.state.todo.todoList
       })
       .catch(err => {
         console.log(err)
@@ -79,7 +79,16 @@ export default {
 
     markCompleted(taskObj){
       store.dispatch("todo/markTodoComplete",taskObj).then(()=>{
-        this.msg = this.$store.state.todo.todoList
+        this.taskArr = this.$store.state.todo.todoList
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    deleteTask(taskObj){
+      store.dispatch("todo/deleteTodo",taskObj).then(() =>{
+        this.taskArr = this.$store.state.todo.todoList
       })
       .catch(err => {
         console.log(err)
@@ -88,7 +97,7 @@ export default {
 
     save(){
       store.dispatch("todo/createTodo",this.todoObj).then(() => {
-        this.msg = this.$store.state.todo.todoList
+        this.taskArr = this.$store.state.todo.todoList
         this.$refs['newTaskModal'].hide()
       })
       .catch(err =>{
@@ -98,7 +107,7 @@ export default {
   },
   created(){
     // var self = this;
-    this.msg = 'TEST';
+    this.taskArr = 'TEST';
     this.getTods();
   }
 };

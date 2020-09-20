@@ -36,4 +36,15 @@ export default{
           }
         });
   },
+  deleteTodo(todoObj){
+    console.log(todoObj)
+    let postParam = {}
+    postParam["todoObj"]=todoObj;
+    return axios.post("http://localhost:8080/deleteTodo", postParam,
+      {
+          headers: {
+            'content-type': 'application/json'
+          }
+        });
+  }
 }

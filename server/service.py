@@ -56,9 +56,36 @@ def getTodoListFromDB():
 
         queryResult = mysqlCon.execute(queries['getTodoList'])
         queryResult = mysqlCon.fetchall()
+
+        #Add Serial Numbers for tracking
+        for (task,index) in zip(queryResult,range(0,len(queryResult))):
+            task["SNo"] = index
+
         return queryResult
     except Exception as e:
         raise ("INTERNAL SERVER ERROR (GTLFD: " + str(e) + " )")
+    finally:
+        if(mysqlDb.is_connected()):
+            mysqlCon.close()
+
+        if(queryResult is not None):
+            queryResult = None
+################################################################################################
+################################################################################################
+def deleteTodo(postParam):
+    try:
+        try:
+            mysqlCon = mysqlDb.cursor(dictionary=True,buffered=False)
+        except:
+            return("ERROR IN DB CONNECTION")
+        taskId = postParam['todoObj']['taskId']
+        mysqlCon.execute(queries['deleteTodo'],(taskId,))
+        mysqlDb.commit()
+
+        queryResult = getTodoListFromDB()
+        return queryResult
+    except Exception as e:
+        return("INTERNAL SERVER ERROR (GTLFD: " + str(e) + " )")
     finally:
         if(mysqlDb.is_connected()):
             mysqlCon.close()

@@ -8,5 +8,8 @@ queries ={
     #############################################################################################
     "markToDoComplete": "UPDATE taskList \
                         SET bStatus = 1 \
-                        WHERE pklTaskId = %s"
+                        WHERE pklTaskId = %s",
+    #############################################################################################
+    "deleteTodo":"DELETE FROM taskList \
+                WHERE pklTaskId = %s"
 }
